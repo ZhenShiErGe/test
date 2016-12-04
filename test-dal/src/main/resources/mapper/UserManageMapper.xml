@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="GBK"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.dlut.mycloudserver.dal.mapper.UserManageMapper">
+<mapper namespace="org.xyz.test.dal.mapper.UserDOMapper">
 	<resultMap id="RM-UserDO" type="UserDO">
 		<result property="account" column="account" />
 		<result property="password" column="password" />
