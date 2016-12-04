@@ -13,9 +13,12 @@
 
 
     <context:component-scan base-package="org.xyz.test.web.controller" />
-
     <mvc:annotation-driven />
 
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.velocity.VelocityViewResolver"
+          p:prefix="/"
+          p:suffix=".jsp"/>
 
 
 </beans>

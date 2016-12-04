@@ -1,7 +1,8 @@
 
 package org.xyz.test.common.common.userservice;
 
-import org.dlut.mycloudserver.client.common.BaseDTO;
+
+import org.xyz.test.common.common.BaseDTO;
 
 /**
  * Created by yizhenn on 2016/12/4.

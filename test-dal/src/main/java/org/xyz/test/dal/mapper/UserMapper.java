@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by yizhenn on 2016/12/4.
  */
-public interface UserDOMapper {
+public interface UserMapper {
 
     /**
      * 根据账号获取用户

@@ -13,5 +13,6 @@
 
     <context:component-scan base-package="org.xyz.test.service" />
     <context:property-placeholder location="classpath:conf/jdbc.properties"/>
+
     <import resource="classpath:dal-context.xml"/>
 </beans>

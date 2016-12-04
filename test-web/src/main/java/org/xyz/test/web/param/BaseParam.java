@@ -1,4 +1,6 @@
-package org.xyz.test.common.common;
+package org.xyz.test.web.param;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Created by yizhenn on 2016/12/4.

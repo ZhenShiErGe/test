@@ -1,6 +1,9 @@
 package org.xyz.test.common.common;
 
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.xyz.test.common.exception.ErrorEnum;
+
 import java.io.Serializable;
 
 /**
@@ -86,7 +89,6 @@ public class HttpResult<T> implements Serializable {
 
     @Override
     public String toString() {
-//        return ToStringBuilder.reflectionToString(this);
-        return "";
+        return ToStringBuilder.reflectionToString(this);
     }
 }
