@@ -19,7 +19,9 @@ public class CommonExecutor {
         BaseParam baseParam = null;
         try {
             baseParam = paramClass.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch (InstantiationException e) {
+            throw new SystemException(ErrorEnum.RUNTIME_EXCEPTION);
+        } catch (IllegalAccessException e) {
             throw new SystemException(ErrorEnum.RUNTIME_EXCEPTION);
         }
         //inject the values into the baseParam
