@@ -6,12 +6,12 @@ package org.xyz.test.common.exception;
 public enum ErrorEnum {
     PARAM_NULL("1", "参数为空"),
     PARAM_IS_INVALID("2", "参数 invalid"),
-    USER_NOT_EXIST("2", "用户不存在"),
-    USER_NOT_STUDENT("3", "用户不是学生"),
-    USER_DELETE_FAIL("4","delet user fail"),
+    USER_NOT_EXIST("3", "用户不存在"),
+    USER_NOT_STUDENT("4", "用户不是学生"),
+    USER_DELETE_FAIL("5","delet user fail"),
 
-    RUNTIME_EXCEPTION("4", "runtime exception!");
-
+    RUNTIME_EXCEPTION("500", "runtime exception!"),
+    UNKNOWN_EXCEPTION("0","unknown exception");
     private String errCode;
     private String errDesc;
 
@@ -26,6 +26,14 @@ public enum ErrorEnum {
 
     public String getErrDesc() {
         return this.errDesc;
+    }
+
+    @Override
+    public String toString() {
+        return "ErrorEnum{" +
+                "errCode='" + errCode + '\'' +
+                ", errDesc='" + errDesc + '\'' +
+                '}';
     }
 }
 

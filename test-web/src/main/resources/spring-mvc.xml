@@ -37,5 +37,7 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
+    <bean class="org.xyz.test.web.exectionhandler.DefaultExceptionHandler"/>
+
 
 </beans>
