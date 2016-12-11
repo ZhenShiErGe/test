@@ -10,6 +10,7 @@ import org.xyz.test.common.common.userservice.QueryUserCondition;
 import org.xyz.test.common.common.userservice.RoleEnum;
 import org.xyz.test.common.common.userservice.UserCreateReqDTO;
 import org.xyz.test.common.common.userservice.UserDTO;
+import org.xyz.test.common.exception.BusinessException;
 import org.xyz.test.common.exception.ErrorEnum;
 import org.xyz.test.dal.dataobject.UserDO;
 import org.xyz.test.service.dao.UserDao;
@@ -32,7 +33,7 @@ public class UserServiceImpl implements IUserService {
     public HttpResult<UserDTO> getUserByAccount(String account) {
         UserDO userDO = userDao.getUserByAccount(account);
         if (userDO == null) {
-            return HttpResult.failedResult(ErrorEnum.USER_NOT_EXIST);
+            throw new BusinessException(ErrorEnum.USER_NOT_EXIST);
         }
         UserDTO userDTO = UserConvent.conventToUserDTO(userDO);
         return HttpResult.successResult(userDTO);
@@ -65,7 +66,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public HttpResult<Pagination<UserDTO>> query(QueryUserCondition queryUserCondition) {
         if (queryUserCondition == null) {
-            return HttpResult.failedResult(ErrorEnum.PARAM_NULL);
+            throw new BusinessException(ErrorEnum.PARAM_NULL);
         }
         int totalCount = userDao.countQuery(queryUserCondition);
         List<UserDO> userDOList = userDao.query(queryUserCondition);
@@ -95,15 +96,15 @@ public class UserServiceImpl implements IUserService {
     @Override
     public HttpResult<Boolean> deleteUserByAccount(String account) {
         if (account == null) {
-            HttpResult.failedResult(ErrorEnum.PARAM_IS_INVALID);
+            throw new BusinessException(ErrorEnum.PARAM_IS_INVALID);
         }
         HttpResult<UserDTO> accountResult = this.getUserByAccount(account);
         if (!accountResult.isSuccess()) {
-            return HttpResult.failedResult(ErrorEnum.USER_NOT_EXIST);
+            throw new BusinessException(ErrorEnum.USER_NOT_EXIST);
         }
 
         if (!this.userDao.deleteUserByAccount(account)) {
-            return HttpResult.failedResult(ErrorEnum.USER_DELETE_FAIL);
+            throw new BusinessException(ErrorEnum.USER_DELETE_FAIL);
         }
         return HttpResult.successResult(Boolean.TRUE);
     }

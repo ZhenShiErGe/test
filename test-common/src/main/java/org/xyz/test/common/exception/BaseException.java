@@ -9,4 +9,8 @@ public class BaseException extends RuntimeException {
     protected BaseException(ErrorEnum errorEnum) {
         this.errorEnum = errorEnum;
     }
+
+    public ErrorEnum getErrorEnum() {
+        return errorEnum;
+    }
 }
