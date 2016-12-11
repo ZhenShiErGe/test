@@ -1,6 +1,7 @@
 package org.xyz.test.web.exectionhandler;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.commons.io.IOUtils;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.xyz.test.common.common.HttpResult;
@@ -40,8 +41,7 @@ public class DefaultExceptionHandler implements HandlerExceptionResolver {
         response.addHeader("Content-Length", String.valueOf(result.length()));
         try {
             ServletOutputStream servletOutputStream = response.getOutputStream();
-            servletOutputStream.print(result);
-            servletOutputStream.flush();
+            IOUtils.write(result,servletOutputStream,"UTF-8");
             if (servletOutputStream != null)
                 servletOutputStream.close();
         } catch (IOException e) {
