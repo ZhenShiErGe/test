@@ -24,7 +24,7 @@ public class DefaultExceptionHandler implements HandlerExceptionResolver {
             BusinessException businessException = (BusinessException) e;
             putErrorEnumToResponse(businessException.getErrorEnum(), httpServletResponse);
         } else if (e instanceof SystemException) {
-            System.out.println("this is a businessException");
+            System.out.println("this is a systemException");
             SystemException systemException = (SystemException) e;
             putErrorEnumToResponse(systemException.getErrorEnum(), httpServletResponse);
         } else {
@@ -35,14 +35,14 @@ public class DefaultExceptionHandler implements HandlerExceptionResolver {
     }
 
     private static void putErrorEnumToResponse(ErrorEnum errorEnum, HttpServletResponse response) {
+        String result = JSON.toJSONString(HttpResult.failedResult(errorEnum));
         response.setContentType("application/json;charset=utf-8");
-        response.addHeader("Content-Length", String.valueOf(errorEnum.toString().length()));
-        String result= JSON.toJSONString(HttpResult.failedResult(errorEnum));
+        response.addHeader("Content-Length", String.valueOf(result.length()));
         try {
             ServletOutputStream servletOutputStream = response.getOutputStream();
             servletOutputStream.print(result);
             servletOutputStream.flush();
-            if(servletOutputStream!=null)
+            if (servletOutputStream != null)
                 servletOutputStream.close();
         } catch (IOException e) {
             System.out.println("put error msg to response exception");
