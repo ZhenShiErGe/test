@@ -28,4 +28,6 @@ public interface IUserService {
 
     HttpResult<Boolean> deleteUserByAccount(String account);
 
+    HttpResult<Boolean> testTransaction(UserCreateReqDTO userCreateReqDTO);
+
 }
