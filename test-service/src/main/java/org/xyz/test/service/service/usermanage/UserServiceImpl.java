@@ -3,6 +3,7 @@ package org.xyz.test.service.service.usermanage;
 
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.xyz.test.client.service.IUserService;
 import org.xyz.test.common.common.HttpResult;
 import org.xyz.test.common.common.Pagination;
@@ -12,6 +13,7 @@ import org.xyz.test.common.common.userservice.UserCreateReqDTO;
 import org.xyz.test.common.common.userservice.UserDTO;
 import org.xyz.test.common.exception.BusinessException;
 import org.xyz.test.common.exception.ErrorEnum;
+import org.xyz.test.common.exception.SystemException;
 import org.xyz.test.dal.dataobject.UserDO;
 import org.xyz.test.service.dao.UserDao;
 
@@ -107,5 +109,19 @@ public class UserServiceImpl implements IUserService {
             throw new BusinessException(ErrorEnum.USER_DELETE_FAIL);
         }
         return HttpResult.successResult(Boolean.TRUE);
+    }
+
+    @Override
+    @Transactional
+    public HttpResult<Boolean> testTransaction(UserCreateReqDTO userCreateReqDTO) {
+        if (userCreateReqDTO == null) {
+            return HttpResult.successResult(Boolean.FALSE);
+        }
+        UserDO userDO = UserConvent.conventToUserDO(userCreateReqDTO);
+        if (userDao.createUser(userDO)) {
+            throw new SystemException(ErrorEnum.TEST_TRANSACTION);
+//            return HttpResult.successResult(Boolean.TRUE);
+        }
+        return HttpResult.successResult(Boolean.FALSE);
     }
 }
