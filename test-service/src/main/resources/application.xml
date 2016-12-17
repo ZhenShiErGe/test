@@ -2,13 +2,30 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
            http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
     <context:component-scan base-package="org.xyz.test.service"/>
     <context:property-placeholder location="classpath:conf/jdbc.properties"/>
+
+
+    <!--定时任务相关-->
+    <task:scheduled-tasks scheduler="taskScheduler">
+        <!--<task:scheduled ref="taskManager" method="print" cron="1/5 * * * * *"/>-->
+        <task:scheduled ref="taskManager" method="print" fixed-rate="10000"/>
+    </task:scheduled-tasks>
+
+
+    <bean id="taskScheduler" class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler"
+          p:poolSize="1"
+          p:errorHandler-ref="errorHandler"
+          p:waitForTasksToCompleteOnShutdown="true"/>
+
+    <bean id="errorHandler" class="org.xyz.test.service.task.TaskManager.TestExceptionHandler"/>
 
 
     <import resource="classpath:dal-context.xml"/>
