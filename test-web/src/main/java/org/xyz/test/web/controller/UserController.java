@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.xyz.test.client.service.IUserService;
 import org.xyz.test.common.common.HttpResult;
 import org.xyz.test.common.common.userservice.UserDTO;
-import org.xyz.test.web.constant.CommonUrl;
 import org.xyz.test.web.constant.CommonUtils;
+import org.xyz.test.web.constant.UrlConstant;
 import org.xyz.test.web.execute.CommonExecute;
 import org.xyz.test.web.execute.CommonExecutor;
 import org.xyz.test.web.param.GetUserByAccountParam;
@@ -21,16 +21,16 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 @Controller
-@RequestMapping(value = CommonUrl.UrlConstant.USER_PREFIX)
+@RequestMapping(value = UrlConstant.USER_PREFIX)
 public class UserController {
 
     @Resource(name = "userService")
     IUserService userService;
 
-    @RequestMapping(value = CommonUrl.UrlConstant.GET_USER_BY_ACCOUNT, produces = CommonUtils.CONTENT_TYPE)
+    @RequestMapping(value = UrlConstant.GET_USER_BY_ACCOUNT, produces = CommonUtils.CONTENT_TYPE)
     @ResponseBody
     public String getUserByAccount(HttpServletRequest request, HttpServletResponse response) {
-        return CommonExecutor.execute(request, response, CommonUrl.GET_USER_BY_ACCOUNT.getParamClass(), new CommonExecute<GetUserByAccountParam>() {
+        return CommonExecutor.execute(request, response, GetUserByAccountParam.class, new CommonExecute<GetUserByAccountParam>() {
             @Override
             public HttpResult execute(GetUserByAccountParam param) {
                 HttpResult<UserDTO> result = userService.getUserByAccount(param.getAccount());

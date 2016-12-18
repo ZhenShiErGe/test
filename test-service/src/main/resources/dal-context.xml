@@ -14,15 +14,24 @@
           p:validationQuery="select 1"
           p:testOnBorrow="true"/>
 
+    <!--动态数据源相关-->
+    <bean id="dynamicDataSource" class="org.xyz.test.service.datasourceswitch.impl.DynamicDataSource">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry key="defaultDataSource" value-ref="defaultDataSource"/>
+            </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="defaultDataSource"/>
+    </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
-          p:dataSource-ref="defaultDataSource"
+          p:dataSource-ref="dynamicDataSource"
           p:typeAliasesPackage="org.xyz.test.dal.dataobject"
           p:mapperLocations="classpath:mapper/*.xml"/>
 
     <!--事务相关-->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
-          p:dataSource-ref="defaultDataSource"/>
+          p:dataSource-ref="dynamicDataSource"/>
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <import resource="classpath:dal-mapper.xml"/>

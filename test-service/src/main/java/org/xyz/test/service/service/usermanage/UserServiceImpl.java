@@ -14,8 +14,12 @@ import org.xyz.test.common.common.userservice.UserDTO;
 import org.xyz.test.common.exception.BusinessException;
 import org.xyz.test.common.exception.ErrorEnum;
 import org.xyz.test.common.exception.SystemException;
+import org.xyz.test.dal.dataobject.DataSourceDO;
 import org.xyz.test.dal.dataobject.UserDO;
+import org.xyz.test.service.dao.DataSourceDao;
 import org.xyz.test.service.dao.UserDao;
+import org.xyz.test.service.datasourceswitch.DataSourceBeanBuilder;
+import org.xyz.test.service.datasourceswitch.DataSourceContext;
 
 
 import javax.annotation.Resource;
@@ -30,6 +34,9 @@ public class UserServiceImpl implements IUserService {
 
     @Resource(name = "userDao")
     private UserDao userDao;
+
+    @Resource(name = "datasourceDao")
+    private DataSourceDao dataSourceDao;
 
     @Override
     public HttpResult<UserDTO> getUserByAccount(String account) {
@@ -119,9 +126,45 @@ public class UserServiceImpl implements IUserService {
         }
         UserDO userDO = UserConvent.conventToUserDO(userCreateReqDTO);
         if (userDao.createUser(userDO)) {
-            throw new SystemException(ErrorEnum.TEST_TRANSACTION);
-//            return HttpResult.successResult(Boolean.TRUE);
+            throw new SystemException(ErrorEnum.TEST_TRANSACTION_EXCEPTION);
         }
         return HttpResult.successResult(Boolean.FALSE);
+    }
+
+    /**
+     * 注意！ @Transactional注解用在此处将导致错误，因为该注解支持的是单数据源的事务，而此方法中已经是多数据源了
+     * @param userCreateReqDTO
+     * @return
+     */
+    @Override
+    public HttpResult<Boolean> testMultiDataSource(UserCreateReqDTO userCreateReqDTO) {
+        if (userCreateReqDTO == null) {
+            return HttpResult.successResult(Boolean.FALSE);
+        }
+
+        UserDO userDO = UserConvent.conventToUserDO(userCreateReqDTO);
+        //先向默认数据源插入
+        if (!userDao.createUser(userDO)) {
+            throw new BusinessException(ErrorEnum.TEST_MULTI_DATASOURCE_EXCEPTION);
+        }
+
+        //再向起他数据源插入
+        List<DataSourceDO> dataSourceDOList = this.dataSourceDao.query();
+        for (DataSourceDO dataSourceDO : dataSourceDOList) {
+            DataSourceBeanBuilder builder = new DataSourceBeanBuilder(
+                    dataSourceDO.getDatabaseName(),
+                    dataSourceDO.getDatabaseIp(),
+                    dataSourceDO.getDatabasePort(),
+                    dataSourceDO.getDatasourceName(),
+                    dataSourceDO.getUsername(),
+                    dataSourceDO.getPassword());
+            DataSourceContext.setDataSource(builder);
+            if (!userDao.createUser(userDO)) {
+                throw new BusinessException(ErrorEnum.TEST_MULTI_DATASOURCE_EXCEPTION);
+            }
+            DataSourceContext.clearDataSource();
+        }
+
+        return HttpResult.successResult(Boolean.TRUE);
     }
 }

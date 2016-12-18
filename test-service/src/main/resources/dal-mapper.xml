@@ -12,4 +12,8 @@
           parent="baseMapper"
           p:mapperInterface="org.xyz.test.dal.mapper.UserMapper"/>
 
+    <bean id="datasourceMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
+          parent="baseMapper"
+          p:mapperInterface="org.xyz.test.dal.mapper.DataSourceMapper"/>
+
 </beans>

@@ -40,7 +40,8 @@ public class DefaultExceptionHandler implements HandlerExceptionResolver {
         response.setContentType("application/json;charset=utf-8");
         try {
             ServletOutputStream servletOutputStream = response.getOutputStream();
-            IOUtils.write(result,servletOutputStream,"UTF-8");
+            servletOutputStream.print(result);
+            servletOutputStream.flush();
             if (servletOutputStream != null)
                 servletOutputStream.close();
         } catch (IOException e) {

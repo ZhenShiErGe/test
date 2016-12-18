@@ -1,8 +1,6 @@
-CREATE DATABASE  IF NOT EXISTS `test_backup` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `test_backup`;
 -- MySQL dump 10.13  Distrib 5.5.53, for debian-linux-gnu (x86_64)
 --
--- Host: 127.0.0.1    Database: test
+-- Host: localhost    Database: testbackup
 -- ------------------------------------------------------
 -- Server version	5.5.53-0ubuntu0.14.04.1
 
@@ -54,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-12-04 15:03:12
+-- Dump completed on 2016-12-18 14:09:43
