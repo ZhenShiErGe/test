@@ -38,7 +38,6 @@ public class DefaultExceptionHandler implements HandlerExceptionResolver {
     private static void putErrorEnumToResponse(ErrorEnum errorEnum, HttpServletResponse response) {
         String result = JSON.toJSONString(HttpResult.failedResult(errorEnum));
         response.setContentType("application/json;charset=utf-8");
-        response.addHeader("Content-Length", String.valueOf(result.length()));
         try {
             ServletOutputStream servletOutputStream = response.getOutputStream();
             IOUtils.write(result,servletOutputStream,"UTF-8");

@@ -16,7 +16,7 @@
     <!--定时任务相关-->
     <task:scheduled-tasks scheduler="taskScheduler">
         <!--<task:scheduled ref="taskManager" method="print" cron="1/5 * * * * *"/>-->
-        <task:scheduled ref="taskManager" method="print" fixed-rate="10000"/>
+        <task:scheduled ref="taskManager" method="print" fixed-rate="60000"/>
     </task:scheduled-tasks>
 
 

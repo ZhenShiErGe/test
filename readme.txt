@@ -1,0 +1,1 @@
+在mysql数据库中，先执行test.sql脚本,再执行test_backup.sql脚本
