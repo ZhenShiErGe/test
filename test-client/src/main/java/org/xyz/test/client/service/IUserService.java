@@ -30,4 +30,6 @@ public interface IUserService {
 
     HttpResult<Boolean> testTransaction(UserCreateReqDTO userCreateReqDTO);
 
+    HttpResult<Boolean> testMultiDataSource(UserCreateReqDTO userCreateReqDTO);
+
 }

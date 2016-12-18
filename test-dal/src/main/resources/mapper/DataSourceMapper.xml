@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.xyz.test.dal.mapper.DataSourceMapper">
+	<resultMap id="RM-DataSourceDO" type="DataSourceDO">
+		<result property="datasourceName" column="datasource_name" />
+		<result property="databaseIp" column="database_ip" />
+		<result property="databasePort" column="database_port" />
+		<result property="databaseName" column="database_name" />
+		<result property="username" column="database_username"/>
+		<result property="password" column="database_password"/>
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModified" column="gmt_modified" />
+	</resultMap>
+
+	<sql id="select-param-column">
+		datasource_name,database_ip,database_port,database_name,database_username,
+		database_password,gmt_create,gmt_modified
+	</sql>
+
+
+	<select id="getAllDataSources" resultMap="RM-DataSourceDO">
+		SELECT
+		<include refid="select-param-column" />
+		FROM other_datasource_meta
+	</select>
+
+</mapper>
