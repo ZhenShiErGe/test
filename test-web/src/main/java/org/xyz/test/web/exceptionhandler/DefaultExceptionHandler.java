@@ -1,7 +1,6 @@
-package org.xyz.test.web.exectionhandler;
+package org.xyz.test.web.exceptionhandler;
 
 import com.alibaba.fastjson.JSON;
-import org.apache.commons.io.IOUtils;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.xyz.test.common.common.HttpResult;
