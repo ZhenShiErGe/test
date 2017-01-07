@@ -33,10 +33,13 @@ final class DynamicDataSource extends AbstractRoutingDataSource implements Appli
             return null;
         }
         DataSourceBean dataSourceBean = new DataSourceBean(dataSourceBeanBuilder);
-        //查看当前容器中是否存在
         try {
-            if (!getTargetDataSources().keySet().contains(dataSourceBean.getBeanName())) {
-                addNewDataSourceToTargerDataSources(dataSourceBean);
+            Map<Object, Object> map = getTargetDataSources();
+            synchronized (map) {
+                if (!map.containsKey(dataSourceBean.getBeanName())) {
+                    map.put(dataSourceBean.getBeanName(), createDataSource(dataSourceBean));
+                    super.afterPropertiesSet();//通知spring有bean更新
+                }
             }
             return dataSourceBean.getBeanName();
         } catch (NoSuchFieldException | IllegalAccessException e) {
@@ -44,10 +47,6 @@ final class DynamicDataSource extends AbstractRoutingDataSource implements Appli
         }
     }
 
-    private void addNewDataSourceToTargerDataSources(DataSourceBean dataSourceBean) throws NoSuchFieldException, IllegalAccessException {
-        getTargetDataSources().put(dataSourceBean.getBeanName(), createDataSource(dataSourceBean));
-        super.afterPropertiesSet();//通知spring有bean更新
-    }
 
     private Object createDataSource(DataSourceBean dataSourceBean) throws IllegalAccessException {
         //在spring容器中创建并且声明bean
