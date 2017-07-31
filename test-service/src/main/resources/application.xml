@@ -27,6 +27,7 @@
 
     <bean id="errorHandler" class="org.xyz.test.service.task.TaskManager.TestExceptionHandler"/>
 
-
     <import resource="classpath:dal-context.xml"/>
+    <import resource="classpath:rpcprovider/rpcProvide.xml"/>
+    <import resource="classpath:rpcconsumer/rpcConsume.xml"/>
 </beans>

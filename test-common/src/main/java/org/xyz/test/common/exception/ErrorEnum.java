@@ -16,7 +16,8 @@ public enum ErrorEnum {
     TEST_MULTI_DATASOURCE_EXCEPTION(7, "500", "test multi datasource exception"),
     MULTI_DATASOURCE_SWITCH_EXCEPTION(8, "500", "multi datasource switch exception"),
     RUNTIME_EXCEPTION(9, "500", "runtime exception!"),
-    UNKNOWN_EXCEPTION(10, "500", "unknown exception");
+    UNKNOWN_EXCEPTION(10, "500", "unknown exception"),
+    RPC_EXCEPTION(11,"500","rpc exception");
 
     private int flag;
     private String errCode;

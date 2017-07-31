@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+    <bean id="remoteRpcService" class="org.xyz.test.service.securehttpinvoker.server.SecureHttpInvokerServiceExporter">
+        <property name="service" ref="rpcService"/>
+        <property name="serviceInterface" value="org.xyz.test.client.service.IRpcService"/>
+        <property name="accessKeyId" value="test"/>
+        <property name="accessKeySecret" value="test"/>
+    </bean>
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="/remoteRpcService">remoteRpcService</prop>
+            </props>
+        </property>
+    </bean>
+</beans>
