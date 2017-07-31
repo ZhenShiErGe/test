@@ -4,8 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-
-    <bean id="consumeRpcService" class="org.xyz.test.service.securehttpinvoker.client.SecureHttpInvokerClientInterceptor">
+    <bean id="consumeRpcService" class="org.xyz.test.service.securehttpinvoker.client.SecureHttpInvokerProxyFactoryBean">
         <property name="serviceUrl" value="http://127.0.0.1:8080/remoteRpcService"/>
         <property name="serviceInterface" value="org.xyz.test.client.service.IRpcService"/>
         <property name="accessKeyId" value="test"/>
